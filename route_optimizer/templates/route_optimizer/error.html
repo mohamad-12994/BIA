@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خطأ</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8d7da;
+        color: #721c24;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #721c24;
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 2rem;
+        border: 1px solid #f5c6cb;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+
+      a {
+        text-decoration: none;
+        background-color: #721c24;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s;
+      }
+
+      a:hover {
+        background-color: #5c1315;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="error-message">
+      <h1>حدث خطأ!</h1>
+      <p>{{ message }}</p>
+    </div>
+    <a href="{% url 'home' %}">العودة إلى الصفحة الرئيسية</a>
+  </body>
+</html>

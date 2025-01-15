@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تحسين مسار الحافلة المدرسية</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f1f8ff;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+      header {
+        background-color: #007bff;
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: white;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+      h1 {
+        color: #007bff;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      form {
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      input,
+      button {
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 100%;
+      }
+      input[type="text"] {
+        font-size: 1.2rem;
+        border: 1px solid #007bff;
+      }
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        font-size: 1.1rem;
+      }
+      li strong {
+        color: #007bff;
+      }
+      .optimize-button {
+        background-color: #17a2b8;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .optimize-button:hover {
+        background-color: #138496;
+      }
+      .back-button {
+        display: inline-block;
+        text-align: center;
+        background-color: #007bff;
+        padding: 0.75rem 2rem;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 2rem;
+        font-size: 1rem;
+      }
+      .back-button:hover {
+        background-color: #0056b3;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+      }
+      th,
+      td {
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <header>تحسين مسار الحافلة المدرسية</header>
+    <div class="container">
+      <h1>إدارة المحطات</h1>
+
+      <!-- نموذج إضافة المحطة -->
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">إضافة محطة</button>
+      </form>
+
+      <h2>المحطات المدخلة</h2>
+      <form method="post">
+        {% csrf_token %}
+        <table>
+          <thead>
+            <tr>
+              <th>تحديد</th>
+              <th>اسم المحطة</th>
+              <th>خط العرض</th>
+              <th>خط الطول</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for station in stations %}
+            <tr>
+              <td>
+                <input
+                  type="checkbox"
+                  name="selected_stations"
+                  value="{{ forloop.counter0 }}"
+                />
+              </td>
+              <td>{{ station.name }}</td>
+              <td>{{ station.latitude }}</td>
+              <td>{{ station.longitude }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit" name="delete_selected">
+          حذف المحطات المحددة
+        </button>
+      </form>
+
+      <!-- تحسين المسار -->
+      <form action="{% url 'optimize_route' %}" method="get">
+        <button type="submit" class="optimize-button">تحسين المسار</button>
+      </form>
+    </div>
+  </body>
+</html>
