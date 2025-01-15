@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نتيجة تحسين المسار</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+      .container {
+        width: 80%;
+        margin: 20px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      .result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      .result-table th,
+      .result-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+      }
+      .result-table th {
+        background-color: #007bff;
+        color: white;
+      }
+      .info-box {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #e9f7ff;
+      }
+      .report-list {
+        margin-top: 20px;
+        padding: 0;
+        list-style: none;
+      }
+      .report-list li {
+        background: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .back-button {
+        display: block;
+        margin: 30px auto;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        width: fit-content;
+      }
+      .back-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <header>نتيجة تحسين المسار</header>
+    <div class="container">
+      <h1>أفضل مسار للحافلة</h1>
+
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>المحطة</th>
+            <th>خط العرض</th>
+            <th>خط الطول</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for station in best_route %}
+          <tr>
+            <td>{{ station.name }}</td>
+            <td>{{ station.latitude }}</td>
+            <td>{{ station.longitude }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <p><strong>طول المسار:</strong> {{ route_length }} كم</p>
+        <p><strong>مدى الأمان:</strong> {{ route_safety }}%</p>
+      </div>
+
+      <h2>تقرير التحليل</h2>
+      <ul class="report-list">
+        {% for line in report %}
+        <li>🔹 {{ line }}</li>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'home' %}" class="back-button"
+        >العودة إلى الصفحة الرئيسية</a
+      >
+    </div>
+  </body>
+</html>
